@@ -3,8 +3,6 @@
 // events cannot listen to async functions so I call start in an anonymous function
 window.addEventListener("DOMContentLoaded", () => start());
 
-const table = document.querySelector("#studentsTable");
-const tableBody = document.querySelector("#studentsTable tbody");
 // ------------------------- One function to RULL THEM ALL! ----------------------
 async function start() {
   // The main function of this program.
@@ -95,50 +93,38 @@ function generateStudents(studentsData, bloodData) {
 
 function displayList(students) {
   // clear the list
-  tableBody.innerHTML = "";
+  let studentList = document.querySelector("#student-list");
+  studentList.innerHTML = "";
 
   // build a new list
   students.forEach((student) => {
-    // create a row for each student
-    let studentRow = document.createElement("tr");
-
-    // create cells (td) for each property
-
-    let imageCell = document.createElement("td");
-    let firstNameCell = document.createElement("td");
-    let middleNameCell = document.createElement("td");
-    let lastNameCell = document.createElement("td");
-    let nickNameCell = document.createElement("td");
-    let genderCell = document.createElement("td");
-    let houseCell = document.createElement("td");
-    let bloodStatusCell = document.createElement("td");
-
-    // fill in the properties to the cells
+    // create a student field
+    let studentField = document.createElement("article");
+    // create tags for each property
     let studentImage = document.createElement("img");
+    let studentName = document.createElement("h2");
+
+    // fill in the student properties to the tags
     studentImage.src = student.image;
     studentImage.alt = "";
-    imageCell.appendChild(studentImage);
+    studentName.textContent = `${student.firstName} ${student.lastName ? student.lastName : ""}`;
 
-    firstNameCell.textContent = student.firstName;
-    middleNameCell.textContent = student.middleName;
-    lastNameCell.textContent = student.lastName;
-    nickNameCell.textContent = student.nickName;
-    genderCell.textContent = student.gender;
-    bloodStatusCell.textContent = student.bloodStatus;
-    houseCell.textContent = student.house;
+    // append tags to the student field
+    studentField.appendChild(studentImage);
+    studentField.appendChild(studentName);
 
-    // append cells to the student row
-    studentRow.appendChild(imageCell);
-    studentRow.appendChild(firstNameCell);
-    studentRow.appendChild(middleNameCell);
-    studentRow.appendChild(lastNameCell);
-    studentRow.appendChild(nickNameCell);
-    studentRow.appendChild(genderCell);
-    studentRow.appendChild(houseCell);
-    studentRow.appendChild(bloodStatusCell);
+    // add a data set to the student field
+    studentField.dataset.name = `${student.firstName} ${
+      student.middleName ? student.middleName : ""
+    } ${student.lastName ? student.lastName : ""}`;
 
-    // append the student row to the table
-    tableBody.appendChild(studentRow);
+    // add a click event to the student filed
+    studentField.addEventListener("click", (event) => {
+      console.log(event.currentTarget.dataset.name);
+    });
+
+    // append the student field to the list
+    studentList.appendChild(studentField);
   });
 }
 
