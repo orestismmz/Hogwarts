@@ -138,5 +138,5 @@ h1 {
   display: none !important;
 }
 .low-opacity {
-  opacity: 0.2;
+  filter: grayscale(5);
 }
